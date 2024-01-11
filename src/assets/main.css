@@ -1,0 +1,18 @@
+@import './base.css';
+
+#app {
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+em {
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 600;
+}
