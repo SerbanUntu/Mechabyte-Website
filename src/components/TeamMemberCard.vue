@@ -11,10 +11,6 @@ const props = defineProps({
   department: {
     default: "Department",
     type: String
-  },
-  src: {
-    default: "",
-    type: String
   }
 });
 </script>
@@ -22,8 +18,9 @@ const props = defineProps({
 <template>
   <div :id="`team-member-card-${props.memberName.toLowerCase()}`" class="team-member-card">
     <div class="card-photo-container">
-      <Silhouette v-if="src == ''" class="silhouette" />
-      <img v-if="src != ''" :src="`../../src/assets/images/${props.src}`" />
+      <img v-if="props.memberName == 'Șerban'" src="../assets/images/Serban.jpeg" />
+      <img v-else-if="props.memberName == 'David'" src="../assets/images/David.jpeg" />
+      <Silhouette v-else class="silhouette" />
     </div>
     <em class="team-member-name">{{ props.memberName }}</em>
     <p class="team-member-department">{{ props.department }}</p>
@@ -41,13 +38,18 @@ const props = defineProps({
 
 .card-photo-container {
   display: flex;
-  width: 10vw;
-  height: 15vw;
+  width: clamp(10vw, 200px, 24vw);
+  height: clamp(15vw, 300px, 36vw);
   justify-content: center;
   align-items: center;
   border-radius: 1vw;
-  border: 1px solid var(--mechabyte-green);
+  border: 0.05vw solid var(--mechabyte-green);
   background: var(--mechabyte-grey);
+  cursor: pointer;
+}
+
+.card-photo-container:hover {
+  box-shadow: 0 0 0.25vw 0.05vw var(--mechabyte-green);
 }
 
 img {
@@ -58,8 +60,8 @@ img {
 }
 
 .silhouette {
-  width: 5vw;
-  height: calc(1.14 * 5vw);
+  width: clamp(5vw, 100px, 12vw);
+  height: clamp(5.7vw, 114px, 13.68vw);
 }
 
 .team-member-name {

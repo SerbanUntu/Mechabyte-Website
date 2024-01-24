@@ -7,19 +7,18 @@
 
 h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(3vw, 72px, 6vw);
+  font-size: clamp(36px, 72px, 6vw);
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
 
 em {
-  font-size: clamp(1.2vw, 24px, 1.8vw);
+  font-size: clamp(12px, 24px, 2vw);
   font-style: italic;
   font-weight: 600;
 }
 
 p {
-  font-size: 20px;
-  font-size: clamp(1vw, 20px, 1.5vw);
+  font-size: clamp(10px, 20px, 1.67vw);
 }
