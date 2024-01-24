@@ -11,10 +11,6 @@ const props = defineProps({
   department: {
     default: "Department",
     type: String
-  },
-  source: {
-    default: "",
-    type: String
   }
 });
 </script>
@@ -22,8 +18,9 @@ const props = defineProps({
 <template>
   <div :id="`team-member-card-${props.memberName.toLowerCase()}`" class="team-member-card">
     <div class="card-photo-container">
-      <Silhouette v-if="source == ''" class="silhouette" />
-      <img v-if="source != ''" :src="`../../src/assets/images/${props.source}`" />
+      <img v-if="props.memberName == 'Șerban'" src="../assets/images/Serban.jpeg" />
+      <img v-else-if="props.memberName == 'David'" src="../assets/images/David.jpeg" />
+      <Silhouette v-else class="silhouette" />
     </div>
     <em class="team-member-name">{{ props.memberName }}</em>
     <p class="team-member-department">{{ props.department }}</p>

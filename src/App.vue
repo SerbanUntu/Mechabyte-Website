@@ -8,46 +8,36 @@ const isVideoAvailable = false;
 
 type Member = {
   name: string,
-  department: string,
-  source: string
+  department: string
 };
 
 let members = ref<Member[]>([{
   name: "Șerban",
   department: "Programming",
-  source: "Serban.jpeg"
 }, {
   name: "Andreea",
   department: "Design",
-  source: ""
 }, {
   name: "Maia",
   department: "Design",
-  source: ""
 }, {
   name: "David",
   department: "CAD / Hardware",
-  source: "David.jpeg"
 }, {
   name: "Rareș",
   department: "Design",
-  source: ""
 }, {
   name: "Cristian",
   department: "Design",
-  source: ""
 }, {
   name: "Aayush",
   department: "Marketing",
-  source: ""
 }, {
   name: "Ștefan",
   department: "Design / CAD",
-  source: ""
 }, {
   name: "Alexia",
   department: "Marketing",
-  source: ""
 }]);
 
 let startPointer = ref<number>(0);
@@ -114,7 +104,7 @@ const displayMembers = computed(() => {
   <main id="app-container" class="app-container">
     <img id="banner" class="banner" alt="Mechabyte banner" src="../public/banner.png" />
     <video v-if="isVideoAvailable" autoplay loop>
-      <source src="./assets/videos/robots.mp4" />
+      <source />
       Video not supported.
     </video>
     <img class="snapshot" v-else src="./assets/images/RobotsSnapshot.jpg" />
@@ -124,7 +114,7 @@ const displayMembers = computed(() => {
         <img class="arrow arrow-left" @click="changeCards(-1)" src="./assets/images/LeftArrow.png" />
         <div class="container-container">
           <div :class="{'member-cards' : true, 'left-movement' : movingLeft, 'right-movement' : movingRight}">
-            <TeamMemberCard class="team-member-card" v-for="(member, index) in displayMembers" :key="index" :member-name="member.name" :department="member.department" :source="member.source" />
+            <TeamMemberCard class="team-member-card" v-for="(member, index) in displayMembers" :key="index" :member-name="member.name" :department="member.department" />
           </div>
         </div>
         <img class="arrow arrow-right" @click="changeCards(1)" src="./assets/images/RightArrow.png" />
@@ -137,10 +127,10 @@ const displayMembers = computed(() => {
       <h1>Contact</h1>
     </section>
     <nav id="buttons-container" class="buttons-container">
-      <NavButton button-name="video" source="Video.png" heading-id="banner" />
-      <NavButton button-name="user" source="User.png" heading-id="about-us" />
-      <NavButton button-name="heart" source="Heart.png" heading-id="support-us" />
-      <NavButton button-name="phone" source="Phone.png" heading-id="contact" />
+      <NavButton button-name="Video" heading-id="banner" />
+      <NavButton button-name="User" heading-id="about-us" />
+      <NavButton button-name="Heart" heading-id="support-us" />
+      <NavButton button-name="Phone" heading-id="contact" />
     </nav>
   </main>
 </template>
@@ -219,7 +209,7 @@ h1 {
 }
 
 .left-movement {
-  left: clamp(10vw, 200px, 24vw);
+  left: clamp(6.5vw, 130px, 15.6vw);
   transition: left 300ms;
 }
 
