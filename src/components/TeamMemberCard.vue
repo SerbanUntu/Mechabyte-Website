@@ -23,7 +23,7 @@ const props = defineProps({
   <div :id="`team-member-card-${props.memberName.toLowerCase()}`" class="team-member-card">
     <div class="card-photo-container">
       <Silhouette v-if="src == ''" class="silhouette" />
-      <img v-if="src != ''" :src="`src/assets/images/${props.src}`" />
+      <img v-if="src != ''" :src="`../../src/assets/images/${props.src}`" />
     </div>
     <em class="team-member-name">{{ props.memberName }}</em>
     <p class="team-member-department">{{ props.department }}</p>
