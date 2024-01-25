@@ -111,15 +111,12 @@ const computedLeft = computed(() => ({
         </div>
         <img class="arrow arrow-right" src="./assets/images/RightArrow.png" @click="scroll(1)" />
       </div>
-      <p v-for="_ in 100">Lorem ipsum</p>
       </section>
     <section id="support-us" class="support-us">
       <h1>Support Us</h1>
-      <p v-for="_ in 100">Lorem ipsum</p>
     </section>
     <section id="contact" class="contact">
       <h1>Contact</h1>
-      <p v-for="_ in 100">Lorem ipsum</p>
     </section>
     <nav id="buttons-container" class="buttons-container">
       <NavButton button-name="Video" heading-id="banner" :style="{'scale': displayNav[0]}" />
