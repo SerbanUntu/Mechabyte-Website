@@ -13,12 +13,12 @@ h1 {
   line-height: normal;
 }
 
-em {
-  font-size: clamp(12px, 24px, 2vw);
-  font-style: italic;
-  font-weight: 600;
+a, p {
+  font-size: clamp(10px, 20px, 1.67vw);
+  line-height: 1.5;
 }
 
-p {
-  font-size: clamp(10px, 20px, 1.67vw);
+strong {
+  font-weight: 600;
+  color: var(--mechabyte-green);
 }

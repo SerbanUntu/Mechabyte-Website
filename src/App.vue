@@ -13,32 +13,32 @@ type Member = {
 };
 
 let members = ref<Member[]>([{
-  name: "Șerban",
-  department: "Programming",
-}, {
   name: "Andreea",
-  department: "Design",
+  department: "Mentor"  
 }, {
-  name: "Maia",
-  department: "Design",
-}, {
-  name: "David",
-  department: "CAD / Hardware",
-}, {
-  name: "Rareș",
-  department: "Design",
+  name: "Șerban",
+  department: "Programming"
 }, {
   name: "Cristian",
-  department: "Design",
+  department: "Hardware"
 }, {
-  name: "Aayush",
-  department: "Marketing",
+  name: "Maia",
+  department: "Hardware"
+}, {
+  name: "Rareș",
+  department: "Hardware"
+}, {
+  name: "David",
+  department: "CAD"
 }, {
   name: "Ștefan",
-  department: "Design / CAD",
+  department: "CAD"
+}, {
+  name: "Aayush",
+  department: "Marketing"
 }, {
   name: "Alexia",
-  department: "Marketing",
+  department: "Marketing"
 }]);
 
 const displayMembers = computed(() => {
@@ -95,28 +95,47 @@ const computedLeft = computed(() => ({
 <template>
   <main id="app-container" class="app-container">
     <img id="banner" class="banner" alt="Mechabyte banner" src="../public/banner.png" />
-    <video v-if="isVideoAvailable" autoplay loop>
+    <video id="video" class="video" v-if="isVideoAvailable" autoplay loop>
       <source />
       Video not supported.
     </video>
-    <img class="snapshot" v-else src="./assets/images/RobotsSnapshot.jpg" />
-    <section id="about-us" class="about-us">
+    <img class="snapshot" v-else src="./assets/images/photos/RobotsSnapshot.jpg" />
+    <section id="about-us" class="about-us section">
       <h1>About Us</h1>
-      <div class="member-cards-section">
-        <img class="arrow arrow-left" src="./assets/images/LeftArrow.png" @click="scroll(-1)" />
-        <div class="container-container">
-          <div class="member-cards" :style="{ ...computedLeft }">
+      <article class="member-cards-section">
+        <img class="arrow arrow-left" src="./assets/images/button_icons/arrows/LeftArrow.png" @click="scroll(-1)" />
+        <section class="container-container">
+          <article class="member-cards" :style="{ ...computedLeft }">
             <TeamMemberCard class="team-member-card" v-for="(member, index) in displayMembers" :key="index" :member-name="member.name" :department="member.department" />
-          </div>
-        </div>
-        <img class="arrow arrow-right" src="./assets/images/RightArrow.png" @click="scroll(1)" />
-      </div>
+          </article>
+        </section>
+        <img class="arrow arrow-right" src="./assets/images/button_icons/arrows/RightArrow.png" @click="scroll(1)" />
+      </article>
+      <p>Welcome to the exciting world of innovation and technology at <strong>Mechabyte</strong>! Our team is a dynamic group of passionate students, dedicated mentors, and supportive community members who come together to explore, create, and compete in the thrilling realm of robotics.</p>
+      <p>Our team is comprised of students from diverse backgrounds, each bringing their unique talents, ideas, and perspectives to the table. We encourage creativity, critical thinking, and problem-solving skills as we work together to design, build, and program robots for various competitions and challenges.</p>
+      <p>We strive to participate in the regional and national phases of FTC, where our members will put their skills to the test and engage with like-minded peers from across the country. These competitions not only provide a platform for friendly competition but also serve as an opportunity for our team members to network, learn, and grow as individuals.</p>
+      <p>Join us on this thrilling adventure as we explore the limitless possibilities of robotics and inspire the next generation of innovators and engineers. Whether you're a seasoned robotics enthusiast or a newcomer with a passion for learning, there's a place for you at <strong>Mechabyte</strong>. Together, let's build a future where technology meets creativity, and possibilities are endless!</p>
       </section>
-    <section id="support-us" class="support-us">
+    <section id="support-us" class="support-us section">
       <h1>Support Us</h1>
+      <p>Please</p>
     </section>
-    <section id="contact" class="contact">
+    <section id="contact" class="contact section">
       <h1>Contact</h1>
+      <section class="links">
+        <article id="instagram-button" class="link-container">
+          <a href="https://www.instagram.com/mechabyte22590?igsh=MXh4ZGZ5MXRqbTlwZQ==" target="_blank"></a>
+          <img src="./assets/images/button_icons/contact/Instagram.png" />
+        </article>
+        <article id="facebook-button" class="link-container">
+          <a href="https://www.facebook.com/profile.php?id=61555837916386" target="_blank"></a>
+          <img src="./assets/images/button_icons/contact/Facebook.png" />
+        </article>
+        <article id="email-button" class="link-container">
+          <a href="mailto:mechabyte22590@gmail.com" target="_blank"></a>
+          <img src="./assets/images/button_icons/contact/Mail.png" />
+        </article>
+      </section>
     </section>
     <nav id="buttons-container" class="buttons-container">
       <NavButton button-name="Video" heading-id="banner" :style="{'scale': displayNav[0]}" />
@@ -143,11 +162,11 @@ const computedLeft = computed(() => ({
   height: 10vw;
 }
 
-video, .snapshot {
+.video, .snapshot {
   height: 37.5vw;
 }
 
-section {
+.section {
   display: flex;
   width: clamp(68.75vw, 1200px, 90vw);
   padding: 0.5vw;
@@ -229,6 +248,41 @@ h1 {
   justify-content: center;
   align-items: flex-start;
   gap: 1vw;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 4vw;
+  width: 100%;
+  position: relative;
+}
+
+.link-container {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 100px;
+  border: 2px solid var(--mechabyte-green);
+  transition: 200ms;
+
+  a {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+  img {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+.link-container:hover {
+  background: var(--dark-grey);
 }
 
 @media only screen and (max-width: 1000px) {
