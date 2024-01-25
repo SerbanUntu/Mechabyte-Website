@@ -28,7 +28,7 @@ const props = defineProps({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: 200ms;
+  transition: 300ms;
   cursor: pointer;
   position: relative;
 }
