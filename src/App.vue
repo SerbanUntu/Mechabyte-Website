@@ -4,7 +4,6 @@ import NavButton from "./components/NavigationButton.vue";
 
 import { ref, computed, onMounted } from "vue";
 
-const isVideoAvailable = false;
 const displayNav = ref<number[]>([0, 0, 0, 0]);
 
 type Member = {
@@ -95,11 +94,9 @@ const computedLeft = computed(() => ({
 <template>
   <main id="app-container" class="app-container">
     <img id="banner" class="banner" alt="Mechabyte banner" src="../public/banner.png" />
-    <video id="video" class="video" v-if="isVideoAvailable" autoplay loop>
-      <source />
+    <iframe id="video" class="video" src="https://www.youtube.com/embed/6e-5Uo1dRic?autoplay=1&mute=1&rel=0&loop=1&playlist=6e-5Uo1dRic" frameborder="0" loop>
       Video not supported.
-    </video>
-    <img class="snapshot" v-else src="./assets/images/photos/RobotsSnapshot.jpg" />
+    </iframe>
     <section id="about-us" class="about-us section">
       <h1>About Us</h1>
       <article class="member-cards-section">
@@ -162,8 +159,12 @@ const computedLeft = computed(() => ({
   height: 10vw;
 }
 
-.video, .snapshot {
-  height: 37.5vw;
+.video {      
+  position: relative;
+  width: calc((100vh - 10.5vw) * 16 / 9);
+  max-width: 100vw;
+  height: calc(100vw * 9 / 16);
+  max-height: calc(100vh - 10.5vw);
 }
 
 .section {
@@ -241,13 +242,13 @@ h1 {
 .buttons-container {
   z-index: 1200;
   position: fixed;
-  left: 1vw;
-  bottom: 1vw;
+  left: 10px;
+  bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 1vw;
+  gap: 10px;
 }
 
 .links {
@@ -285,7 +286,7 @@ h1 {
   background: var(--dark-grey);
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1360px) {
   .buttons-container {
     background: var(--background-grey);
     padding: 5px;
@@ -305,6 +306,11 @@ h1 {
 
   .app-container {
     padding-bottom: 80px;
+  }
+
+  .video {
+    width: calc((100vh - 10.5vw - 80px) * 16 / 9);
+    max-height: calc(100vh - 10.5vw - 80px);
   }
 }
 </style>

@@ -23,8 +23,8 @@ const props = defineProps({
   background: var(--dark-grey);
   box-shadow: 0 0.15vw 0.1vw 0.1vw hsl(0deg 0% 0% / 25%);
   display: flex;
-  width: 3vw;
-  height: 3vw;
+  width: 60px;
+  height: 60px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -34,6 +34,7 @@ const props = defineProps({
 }
 
 a {
+  z-index: 2000;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -42,12 +43,10 @@ a {
 
 .nav-button:hover {
   background: hsl(0deg 0% 17% / 100%);
-  transition: 200ms;
-}
 
-.nav-button:active {
-  background: var(--mechabyte-green);
-  transition: 0ms;
+  img {
+    opacity: 1;
+  }
 }
 
 .button-icon-container {
@@ -63,5 +62,7 @@ a {
 img {
   width: 100%;
   height: 100%;
+  opacity: 0.8;
+  transition: opacity 200ms;
 }
 </style>
