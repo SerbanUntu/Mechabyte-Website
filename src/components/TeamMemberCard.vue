@@ -30,38 +30,38 @@ const props = defineProps({
 <style scoped>
 .team-member-card {
   display: inline-flex;
-  padding: 0.25vw;
+  padding: 5px;
   flex-direction: column;
   align-items: center;
-  gap: 0.5vw;
+  gap: 10px;
 }
 
 .card-photo-container {
   display: flex;
-  width: clamp(10vw, 200px, 24vw);
-  height: clamp(15vw, 300px, 36vw);
+  width: 200px;
+  height: 300px;
   justify-content: center;
   align-items: center;
-  border-radius: 1vw;
+  border-radius: 20px;
   border: 0.05vw solid var(--mechabyte-green);
   background: var(--mechabyte-grey);
   cursor: pointer;
 }
 
 .card-photo-container:hover {
-  box-shadow: 0 0 0.25vw 0.05vw var(--mechabyte-green);
+  box-shadow: 0 0 0.5vw 0.1vw var(--mechabyte-green);
 }
 
 img {
   width: 100%;
   height: 100%;
-  border-radius: 1vw;
+  border-radius: 20px;
   object-fit: cover;
 }
 
 .silhouette {
-  width: clamp(5vw, 100px, 12vw);
-  height: clamp(5.7vw, 114px, 13.68vw);
+  width: 100px;
+  height: 114px;
 }
 
 .team-member-name {

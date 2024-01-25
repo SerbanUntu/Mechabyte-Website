@@ -5,6 +5,7 @@ import NavButton from "./components/NavigationButton.vue";
 import { ref, computed, onMounted } from "vue";
 
 const isVideoAvailable = false;
+const displayNav = ref<number[]>([0, 0, 0, 0]);
 
 type Member = {
   name: string,
@@ -40,64 +41,55 @@ let members = ref<Member[]>([{
   department: "Marketing",
 }]);
 
-let startPointer = ref<number>(0);
-let endPointer = ref<number>(5);
+const displayMembers = computed(() => {
+  let result: Member[] = members.value.concat(members.value);
+  return result;
+});
 
-let movingLeft = ref<boolean>(false);
-let movingRight = ref<boolean>(false);
+let leftShift = ref<number>(1780);
+let direction = ref<number>(1);
+let factor = ref<number>(0.2);
 
-let lastCall: number = 0;
-let lastAutoCall: number = Date.now();
-
-function changeCards(change: number): void {
-  if (Math.abs(lastCall - Date.now()) < 400) {
-    return;
-  } 
-  lastCall = Date.now();
-  lastAutoCall = Date.now();
-  switch(change) {
-    case -1: {
-      startPointer.value -= 1;
-      if(startPointer.value < 0) startPointer.value = members.value.length - 1;
-      movingLeft.value = true;
-      setTimeout(() => {
-        endPointer.value -= 1;
-        if(endPointer.value < 0) endPointer.value = members.value.length - 1;
-        movingLeft.value = false;
-      }, 350);
-      break;
+setInterval(() => {
+  if (direction.value == 1) {
+    leftShift.value -= factor.value;
+    if(leftShift.value <= -640) {
+      leftShift.value = 1780;
     }
-    case 1: {
-      endPointer.value += 1;
-      if(endPointer.value > members.value.length - 1) endPointer.value = 0;
-      movingRight.value = true;
-      setTimeout(() => {
-        startPointer.value += 1;
-        if(startPointer.value > members.value.length - 1) startPointer.value = 0;
-        movingRight.value = false;
-      }, 350);
-      break;
+  }
+  else {
+    leftShift.value += factor.value;
+    console.log(leftShift.value);
+    if(leftShift.value >= 1780) {
+      leftShift.value = -640;
     }
+  }
+}, 1);
+
+let lastScroll = Date.now() - 250;
+
+function scroll(change: number) {
+  if(Math.abs(Date.now() - lastScroll) > 250) {
+    lastScroll = Date.now();
+    direction.value = change;
+    factor.value = 6;
+    setTimeout(() => factor.value = 0.2, 200);
   }
 }
 
-setInterval(() => {
-  if(Math.abs(lastAutoCall - Date.now()) > 4000) {
-    changeCards(1);
-  }
-}, 1000);
-
-const displayMembers = computed(() => {
-  let result: Member[] = [];
-  let i: number = startPointer.value;
-  while(i != endPointer.value) {
-    result.push(members.value[i]);
-    i++;
-    if(i == members.value.length) i = 0;
-  }
-  result.push(members.value[i]);
-  return result;
+onMounted(() => {
+  let i = 0;
+  setInterval(() => {
+    if (i < 4) {
+      displayNav.value[i] = 1;
+      i++;
+    }
+  }, 200);
 });
+
+const computedLeft = computed(() => ({
+  'left': `${leftShift.value}px`
+}));
 </script>
 
 <template>
@@ -110,38 +102,43 @@ const displayMembers = computed(() => {
     <img class="snapshot" v-else src="./assets/images/RobotsSnapshot.jpg" />
     <section id="about-us" class="about-us">
       <h1>About Us</h1>
-      <div class="member-cards-section" @mouseover="lastAutoCall = Date.now()">
-        <img class="arrow arrow-left" @click="changeCards(-1)" src="./assets/images/LeftArrow.png" />
+      <div class="member-cards-section">
+        <img class="arrow arrow-left" src="./assets/images/LeftArrow.png" @click="scroll(-1)" />
         <div class="container-container">
-          <div :class="{'member-cards' : true, 'left-movement' : movingLeft, 'right-movement' : movingRight}">
+          <div class="member-cards" :style="{ ...computedLeft }">
             <TeamMemberCard class="team-member-card" v-for="(member, index) in displayMembers" :key="index" :member-name="member.name" :department="member.department" />
           </div>
         </div>
-        <img class="arrow arrow-right" @click="changeCards(1)" src="./assets/images/RightArrow.png" />
+        <img class="arrow arrow-right" src="./assets/images/RightArrow.png" @click="scroll(1)" />
       </div>
+      <p v-for="_ in 100">Lorem ipsum</p>
       </section>
     <section id="support-us" class="support-us">
       <h1>Support Us</h1>
+      <p v-for="_ in 100">Lorem ipsum</p>
     </section>
     <section id="contact" class="contact">
       <h1>Contact</h1>
+      <p v-for="_ in 100">Lorem ipsum</p>
     </section>
     <nav id="buttons-container" class="buttons-container">
-      <NavButton button-name="Video" heading-id="banner" />
-      <NavButton button-name="User" heading-id="about-us" />
-      <NavButton button-name="Heart" heading-id="support-us" />
-      <NavButton button-name="Phone" heading-id="contact" />
+      <NavButton button-name="Video" heading-id="banner" :style="{'scale': displayNav[0]}" />
+      <NavButton button-name="User" heading-id="about-us" :style="{'scale': displayNav[1]}" />
+      <NavButton button-name="Heart" heading-id="support-us" :style="{'scale': displayNav[2]}" />
+      <NavButton button-name="Phone" heading-id="contact" :style="{'scale': displayNav[3]}" />
     </nav>
   </main>
 </template>
 
 <style scoped>
 .app-container {
+  padding-bottom: 2px;
   display: flex;
   width: 100vw;
   flex-direction: column;
   align-items: center;
   gap: 0.5vw;
+  position: relative;
 }
 
 .banner {
@@ -177,7 +174,7 @@ h1 {
   height: auto;
   padding: 0.5vw;
   flex-direction: row;
-  gap: 1vw;
+  gap: 20px;
   align-items: center;
   justify-content: center;
 }
@@ -191,7 +188,7 @@ h1 {
 }
 
 .container-container {
-  width: clamp(55vw, 1000px, 80vw);
+  width: 1000px;
   overflow-x: hidden;
 }
 
@@ -201,21 +198,11 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3vw;
+  gap: 60px;
   left: 0;
   right: 0;
   transition: left 0ms;
   transition: right 0ms;
-}
-
-.left-movement {
-  left: clamp(6.5vw, 130px, 15.6vw);
-  transition: left 300ms;
-}
-
-.right-movement {
-  left: calc(0vw - clamp(6.5vw, 130px, 15.6vw));
-  transition: left 300ms;
 }
 
 .about-us,
@@ -236,6 +223,7 @@ h1 {
 }
 
 .buttons-container {
+  z-index: 1200;
   position: fixed;
   left: 1vw;
   bottom: 1vw;
@@ -244,5 +232,28 @@ h1 {
   justify-content: center;
   align-items: flex-start;
   gap: 1vw;
+}
+
+@media only screen and (max-width: 1000px) {
+  .buttons-container {
+    background: var(--background-grey);
+    padding: 5px;
+    flex-direction: row;
+    width: 100vw;
+    left: 0;
+    bottom: 0;
+    gap: 5vw;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .nav-button {
+    width: 70px;
+    height: 70px;
+  }
+
+  .app-container {
+    padding-bottom: 80px;
+  }
 }
 </style>
